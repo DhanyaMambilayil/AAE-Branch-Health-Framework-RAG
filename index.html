@@ -614,6 +614,8 @@ ROW_GRADES.forEach((pnl,ri) => {
 });
 grid.innerHTML = html;
 
+// Page-level CSS zoom (e.g. 0.9 on the SharePoint copy); fixed popover coords must be divided by it
+function pageZoom(){ const z = parseFloat(getComputedStyle(document.documentElement).zoom); return z > 0 ? z : 1; }
 // Position popovers using the viewport (fixed), so no ancestor's scroll/overflow can clip them
 // Key Actions trigger ONLY from the zone heading (zname-row), not the whole cell,
 // so hovering a branch chip never opens Key Actions at the same time.
@@ -623,9 +625,10 @@ document.querySelectorAll(".m-cell").forEach(cellEl => {
   if (!popover || !heading) return;
   heading.addEventListener("mouseenter", () => {
     const rect = heading.getBoundingClientRect();
-    const left = Math.max(8, Math.min(rect.left, window.innerWidth - 276));
+    const Z = pageZoom();
+    const left = Math.max(8, Math.min(rect.left/Z, window.innerWidth/Z - 276));
     popover.style.left = left + "px";
-    popover.style.bottom = (window.innerHeight - rect.top + 6) + "px";
+    popover.style.bottom = ((window.innerHeight - rect.top)/Z + 6) + "px";
     popover.classList.add("show");
   });
   heading.addEventListener("mouseleave", () => {
@@ -639,9 +642,10 @@ document.querySelectorAll(".chip-wrap").forEach(chipEl => {
   if (!popover) return;
   chipEl.addEventListener("mouseenter", () => {
     const rect = chipEl.getBoundingClientRect();
-    const left = Math.max(8, Math.min(rect.left, window.innerWidth - 206));
+    const Z = pageZoom();
+    const left = Math.max(8, Math.min(rect.left/Z, window.innerWidth/Z - 206));
     popover.style.left = left + "px";
-    popover.style.top = (rect.bottom + 6) + "px";
+    popover.style.top = (rect.bottom/Z + 6) + "px";
     popover.classList.add("show");
   });
   chipEl.addEventListener("mouseleave", () => {
@@ -661,6 +665,16 @@ const zoneLabels = zoneOrder.map(z => z.name);
 const zoneValues = zoneOrder.map(z => zoneCountsMap[z.name]);
 const zoneColors = zoneOrder.map(z => GROUP_STYLE[z.group].chart);
 const zoneCounts = zoneCountsMap; // kept for any other code that still references zoneCounts
+// When the page has a CSS zoom (SharePoint copy), correct Chart.js mouse coordinates
+if (typeof Chart !== "undefined") Chart.register({
+  id:'pageZoomFix',
+  beforeEvent(chart, args){
+    const Z = pageZoom(); const e = args.event, n = e && e.native;
+    if (Z === 1 || !n || n.clientX == null) return;
+    const r = chart.canvas.getBoundingClientRect();
+    e.x = (n.clientX - r.left) / Z; e.y = (n.clientY - r.top) / Z;
+  }
+});
 try {
   if (typeof Chart === "undefined") throw new Error("Chart.js failed to load");
   new Chart(document.getElementById('zoneBarChart').getContext('2d'), {
@@ -850,4 +864,3 @@ document.querySelectorAll("#viewTabs button").forEach(btn => {
 </script>
 </body>
 </html>
-
