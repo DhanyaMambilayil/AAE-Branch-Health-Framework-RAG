@@ -529,11 +529,11 @@ const ZONES = {
 
 // Cell styling by group
 const GROUP_STYLE = {
-  champion:  { text:"#0B7A32", bg:"#BFE3B7", border:"#2E6B2A", chip:"#DCF0D6", chart:"#0F4A24" },
-  strong:    { text:"#1E6B40", bg:"#E7F3EC", border:"#1E7145", chip:"#F3F9F5", chart:"#1E7145" },
-  developing:{ text:"#7A5200", bg:"#FDF3D6", border:"#D08C00", chip:"#FEFAE9", chart:"#E8A33D" },
-  atrisk:    { text:"#9A3D06", bg:"#FBE3D0", border:"#E8600A", chip:"#FDF0E6", chart:"#E8600A" },
-  critical:  { text:"#C40000", bg:"#F0B8B2", border:"#8F2A20", chip:"#F8D9D5", chart:"#A30000" },
+  champion:  { text:"#0A1F44", bg:"#7FD88A", border:"#1E8E3E", chip:"#DCF0D6", chart:"#0F4A24" },
+  strong:    { text:"#0A1F44", bg:"#E7F3EC", border:"#1E7145", chip:"#F3F9F5", chart:"#1E7145" },
+  developing:{ text:"#0A1F44", bg:"#FDF3D6", border:"#D08C00", chip:"#FEFAE9", chart:"#E8A33D" },
+  atrisk:    { text:"#0A1F44", bg:"#FBE3D0", border:"#E8600A", chip:"#FDF0E6", chart:"#E8600A" },
+  critical:  { text:"#0A1F44", bg:"#F58A80", border:"#C62828", chip:"#F8D9D5", chart:"#A30000" },
 };
 function cellColors(key){ const s = GROUP_STYLE[ZONES[key].group]; return { bg:s.bg, border:s.border }; }
 
@@ -850,3 +850,4 @@ document.querySelectorAll("#viewTabs button").forEach(btn => {
 </script>
 </body>
 </html>
+
