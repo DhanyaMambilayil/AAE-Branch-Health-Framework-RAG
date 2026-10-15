@@ -246,6 +246,14 @@
   .bhi-rank-row .bhi-rank-zone{width:96px;flex-shrink:0;text-align:left;}
   .bhi-rank-row .bhi-rank-name{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
   .chip.legend-chip{font-size:12px;padding:3px 10px;border-radius:6px;font-weight:600;border-width:1px;border-style:solid;}
+  /* Framework zone illustration: Volume | Profit grade tile on the right of each box */
+  #frameworkZonesGrid .m-cell{padding-right:150px;}
+  .fw-illus{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(10,31,68,.18);border:1.5px solid rgba(255,255,255,.85);}
+  .fw-seg{width:60px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-family:var(--font-body);line-height:1.2;}
+  .fw-seg + .fw-seg{border-left:1.5px solid rgba(255,255,255,.85);}
+  .fw-seg span{font-size:9px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;opacity:.9;}
+  .fw-seg b{font-size:12px;font-weight:700;}
+  .grp-champion .fw-actions b, .grp-critical .fw-actions b{color:#0A1F44;}
 </style>
 </head>
 <body>
@@ -498,6 +506,7 @@ const branches = [{"fullName": "FARWANIYA-6", "name": "FR6", "pnl": "G", "pnlVal
 
 const GRADE_HEX = {G:'#1E7145', A:'#D08C00', R:'#A30000'};
 const GRADE_LABEL = {G:'Green', A:'Amber', R:'Red'};
+const GRADE_LEVEL = {G:'High', A:'Medium', R:'Low'};
 
 // Operational Efficiency, BHI and Rank are provided directly in the data (b.opEff, b.bhi, b.rank)
 
@@ -513,7 +522,7 @@ const ZONES = {
   "GG": { name:"Champion", icon:"🏆", group:"champion", comment:"Best-in-class performance. Benchmark and replicate.",
     actions:["Maintain performance standards","Recognize and reward","Replicate best practices across network"] },
 
-  "AR": { name:"Volume Alert", icon:"🔄", group:"atrisk", comment:"Moderate margins but volume is falling short.",
+  "AR": { name:"Volume Alert", icon:"🔄", group:"atrisk", comment:"Moderate profitability but volume is falling short.",
     actions:["Build volume through marketing and partnerships","Review staffing against footfall","Reassess location potential"] },
   "AA": { name:"Core Performer", icon:"👥", group:"developing", comment:"Stable and reliable performance.",
     actions:["Optimize operations","Grow both profit and volume","Monitor for consistent performance"] },
@@ -552,10 +561,14 @@ if (zonesGridEl) {
       const key = pnl+txn, z = ZONES[key], cc = cellColors(key);
       const actionsList = z.actions.map(a => `<li>${a}</li>`).join("");
       zHtml += `
-        <div class="m-cell" style="grid-column:${3+ci}; grid-row:${1+ri}; background:${cc.bg}; border-color:${cc.border};">
+        <div class="m-cell grp-${z.group}" style="grid-column:${3+ci}; grid-row:${1+ri}; background:${cc.bg}; border-color:${cc.border};">
           <div class="zname-row"><span class="zicon" style="font-size:18px;">${z.icon}</span><span class="zname" style="color:${GROUP_STYLE[z.group].text}">${z.name}</span></div>
           <div class="zcomment">${z.comment}</div>
           <div class="fw-actions"><b>Key Actions</b><ul>${actionsList}</ul></div>
+          <div class="fw-illus" title="Transaction Volume: ${GRADE_LEVEL[txn]} · Profitability: ${GRADE_LEVEL[pnl]}">
+            <div class="fw-seg" style="background:${GRADE_HEX[txn]}"><span>Volume</span><b>${GRADE_LEVEL[txn]}</b></div>
+            <div class="fw-seg" style="background:${GRADE_HEX[pnl]}"><span>Profit</span><b>${GRADE_LEVEL[pnl]}</b></div>
+          </div>
         </div>`;
     });
   });
