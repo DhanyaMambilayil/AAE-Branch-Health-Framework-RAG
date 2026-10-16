@@ -146,7 +146,7 @@
   .axis-line{flex:1;block-size:2px;background:#4A505A;border-radius:2px;}
   .axis-head{flex:none;inline-size:0;block-size:0;border-block:7px solid transparent;border-inline-start:12px solid #4A505A;margin-inline-start:-14px;}
   .axis-text{flex:none;}
-  .matrix-legend{font-size:14px !important;color:#4A505A !important;font-weight:500;margin:10px 0 18px 16px !important;line-height:1.9;}
+  .matrix-legend{font-size:12.5px !important;color:#4A505A !important;font-weight:500;margin:10px 0 18px 16px !important;line-height:1.9;}
   .matrix-legend b{color:#373C44;font-weight:700;}
   .matrix-legend .co-legend{gap:16px;font-weight:600;}
   .axis-title.vertical{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;padding:0 6px;}
@@ -245,7 +245,7 @@
   .bhi-rank-row .co-tag{width:30px;text-align:left;}
   .bhi-rank-row .bhi-rank-zone{width:96px;flex-shrink:0;text-align:left;}
   .bhi-rank-row .bhi-rank-name{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
-  .chip.legend-chip{font-size:12px;padding:3px 10px;border-radius:6px;font-weight:600;border-width:1px;border-style:solid;}
+  .chip.legend-chip{font-size:11px;padding:2px 9px;border-radius:6px;font-weight:600;border-width:1px;border-style:solid;}
   /* Framework zone illustration: Volume | Profit grade tile on the right of each box */
   #frameworkZonesGrid .m-cell{padding-right:150px;}
   .fw-illus{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(10,31,68,.18);border:1.5px solid rgba(255,255,255,.85);}
@@ -254,6 +254,7 @@
   .fw-seg span{font-size:9px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;opacity:.9;}
   .fw-seg b{font-size:12px;font-weight:700;}
   .grp-champion .fw-actions b, .grp-critical .fw-actions b{color:#0A1F44;}
+  .matrix-legend .lg-val{color:var(--gold);font-weight:700;}
 </style>
 </head>
 <body>
@@ -282,7 +283,7 @@
 
   <div class="panel">
     <h2>Branch Health Matrix</h2>
-    <p class="panel-sub matrix-legend"><b>Rows:</b> Profitability &nbsp;&middot;&nbsp; <b>Columns:</b> Transaction Volume (Count) &nbsp;&middot;&nbsp; <b>Dot color:</b> Operational Efficiency &nbsp;&middot;&nbsp; <b>Branch legend:</b> <span class="co-legend" style="margin-left:4px"><span class="chip co-aae legend-chip">Ansari</span><span class="chip co-bec legend-chip">BEC</span></span></p>
+    <p class="panel-sub matrix-legend"><b>Rows:</b> <span class="lg-val">Profitability</span> &nbsp;&middot;&nbsp; <b>Columns:</b> <span class="lg-val">Transaction Volume (Count)</span> &nbsp;&middot;&nbsp; <b>Dot color:</b> <span class="lg-val">Operational Efficiency</span> &nbsp;&middot;&nbsp; <b>Branch legend:</b> <span class="co-legend" style="margin-left:4px"><span class="chip co-aae legend-chip">Ansari</span><span class="chip co-bec legend-chip">BEC</span></span></p>
     <p class="hover-hint">Hover over any branch name for a deeper dive.</p>
     <div class="matrix-scroll">
       <div class="matrix-grid" id="matrixGrid"></div>
